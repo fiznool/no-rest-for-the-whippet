@@ -22,6 +22,14 @@ module.exports = function(app) {
       });
     }
 
+    // If the error is a Mongoose ValidationError,
+    // the client sent invalid data when trying to
+    // create or update a document.
+    // Return a 400.
+    if(err.name === 'ValidationError') {
+      return res.status(400).json(err.errors);
+    }
+
     // Otherwise, fallback to an Internal Server Error.
     res.status(500).json({
       message: 'Internal Server Error'

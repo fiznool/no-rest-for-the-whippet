@@ -4,13 +4,17 @@ var mongoose = require('mongoose');
 
 var DogSchema = new mongoose.Schema({
   name: {
-    type: String
+    type: String,
+    required: true
   },
   breed: {
-    type: String
+    type: String,
+    required: true,
+    enum: ['corgi', 'labrador', 'spaniel']
   },
   dob: {
-    type: Date
+    type: Date,
+    required: true
   }
 });
 
