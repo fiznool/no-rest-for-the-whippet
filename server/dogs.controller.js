@@ -30,7 +30,11 @@ DogsController.show = function(req, res, next) {
 };
 
 DogsController.create = function(req, res, next) {
-  next({ status: 500 });
+  return Dog.create(req.body, function(err, dog) {
+    if(err) { return next(err); }
+
+    return res.status(201).json(dog);
+  });
 };
 
 DogsController.update = function(req, res, next) {
