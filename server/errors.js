@@ -12,6 +12,16 @@ module.exports = function(app) {
       return err.body ? res.json(err.body) : res.end();
     }
 
+    // If the error is a Mongoose CastError, and the path
+    // is the _id, the client sent an invalid ID when
+    // addressing a single resource.
+    // Return a 404.
+    if(err.name === 'CastError' && err.path === '_id') {
+      return res.status(404).json({
+        message: 'Not Found'
+      });
+    }
+
     // Otherwise, fallback to an Internal Server Error.
     res.status(500).json({
       message: 'Internal Server Error'
