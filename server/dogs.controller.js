@@ -13,7 +13,11 @@ var Dog = require('./dog.model');
 var DogsController = {};
 
 DogsController.index = function(req, res, next) {
-  next({ status: 500 });
+  return Dog.find(function(err, dogs) {
+    if(err) { return next(err); }
+
+    return res.status(200).json(dogs);
+  });
 };
 
 DogsController.show = function(req, res, next) {
