@@ -92,7 +92,23 @@ describe('Dogs API Specs', function() {
   });
 
   describe('Create', function() {
-    it('should create a dog');
+    it('should create a dog', function(done) {
+      agent
+        .post('/api/dogs')
+        .send({ name: 'Manny', breed: 'spaniel', dob: '2011-10-12T00:00:00.000Z'})
+        .set('Accept', 'application/json')
+        .expect(201)
+        .end(function(err, res) {
+          expect(err).to.be(null);
+
+          expect(res.body._id).to.be.ok();
+          expect(res.body.name).to.be('Manny');
+          expect(res.body.breed).to.be('spaniel');
+          expect(res.body.dob).to.be('2011-10-12T00:00:00.000Z');
+
+          done();
+        });
+    });
 
     describe('Validation', function() {
       it('should require a name');
