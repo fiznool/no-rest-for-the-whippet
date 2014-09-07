@@ -43,6 +43,7 @@ describe('Dogs API Specs', function() {
     it('should get all dogs', function(done) {
       agent
         .get('/api/dogs')
+        .auth('secret api key', 'x')
         .expect(200)
         .end(function(err, res) {
           expect(err).to.be(null);
@@ -64,6 +65,7 @@ describe('Dogs API Specs', function() {
     it('should filter by breed', function(done) {
       agent
         .get('/api/dogs?breed=labrador')
+        .auth('secret api key', 'x')
         .expect(200)
         .end(function(err, res) {
           expect(err).to.be(null);
@@ -81,6 +83,7 @@ describe('Dogs API Specs', function() {
     it('should sort by dob, oldest first', function(done) {
       agent
         .get('/api/dogs?sort=dob')
+        .auth('secret api key', 'x')
         .expect(200)
         .end(function(err, res) {
           expect(err).to.be(null);
@@ -102,6 +105,7 @@ describe('Dogs API Specs', function() {
     it('should paginate dogs', function(done) {
       agent
         .get('/api/dogs?offset=1&limit=1')
+        .auth('secret api key', 'x')
         .expect(200)
         .end(function(err, res) {
           expect(err).to.be(null);
@@ -121,6 +125,7 @@ describe('Dogs API Specs', function() {
     it('should get a dog by ID', function(done) {
       agent
         .get('/api/dogs/' + dogIDs[0])
+        .auth('secret api key', 'x')
         .expect(200)
         .end(function(err, res) {
           expect(err).to.be(null);
@@ -136,12 +141,14 @@ describe('Dogs API Specs', function() {
     it('should return a 404 if the dog cannot be found', function(done) {
       agent
         .get('/api/dogs/' + ObjectId())
+        .auth('secret api key', 'x')
         .expect(404, done);
     });
 
     it('should return a 404 if the ID is invalid', function(done) {
       agent
         .get('/api/dogs/1')
+        .auth('secret api key', 'x')
         .expect(404, done);
     });
   });
@@ -152,6 +159,7 @@ describe('Dogs API Specs', function() {
         .post('/api/dogs')
         .send({ name: 'Manny', breed: 'spaniel', dob: '2011-10-12T00:00:00.000Z'})
         .set('Accept', 'application/json')
+        .auth('secret api key', 'x')
         .expect(201)
         .end(function(err, res) {
           expect(err).to.be(null);
@@ -171,6 +179,7 @@ describe('Dogs API Specs', function() {
           .post('/api/dogs')
           .send({ breed: 'spaniel', dob: '2011-10-12T00:00:00.000Z'})
           .set('Accept', 'application/json')
+          .auth('secret api key', 'x')
           .expect(400, done);
       });
 
@@ -179,6 +188,7 @@ describe('Dogs API Specs', function() {
           .post('/api/dogs')
           .send({ name: 'Manny', dob: '2011-10-12T00:00:00.000Z'})
           .set('Accept', 'application/json')
+          .auth('secret api key', 'x')
           .expect(400, done);
       });
 
@@ -187,6 +197,7 @@ describe('Dogs API Specs', function() {
           .post('/api/dogs')
           .send({ name: 'Manny', breed: 'schnauser', dob: '2011-10-12T00:00:00.000Z'})
           .set('Accept', 'application/json')
+          .auth('secret api key', 'x')
           .expect(400, done);
       });
 
@@ -195,6 +206,7 @@ describe('Dogs API Specs', function() {
           .post('/api/dogs')
           .send({ name: 'Manny', breed: 'spaniel' })
           .set('Accept', 'application/json')
+          .auth('secret api key', 'x')
           .expect(400, done);
       });
     });
@@ -206,6 +218,7 @@ describe('Dogs API Specs', function() {
         .put('/api/dogs/' + dogIDs[0])
         .send({ name: 'Cooper' })
         .set('Accept', 'application/json')
+        .auth('secret api key', 'x')
         .expect(200)
         .end(function(err, res) {
           expect(err).to.be(null);
@@ -222,12 +235,14 @@ describe('Dogs API Specs', function() {
     it('should return a 404 if the dog cannot be found', function(done) {
       agent
         .put('/api/dogs/' + ObjectId())
+        .auth('secret api key', 'x')
         .expect(404, done);
     });
 
     it('should return a 404 if the ID is invalid', function(done) {
       agent
         .put('/api/dogs/1')
+        .auth('secret api key', 'x')
         .expect(404, done);
     });
 
@@ -237,6 +252,7 @@ describe('Dogs API Specs', function() {
           .put('/api/dogs/' + dogIDs[0])
           .send({ name: '' })
           .set('Accept', 'application/json')
+          .auth('secret api key', 'x')
           .expect(400, done);
       });
 
@@ -245,6 +261,7 @@ describe('Dogs API Specs', function() {
           .put('/api/dogs/' + dogIDs[0])
           .send({ breed: '' })
           .set('Accept', 'application/json')
+          .auth('secret api key', 'x')
           .expect(400, done);
       });
 
@@ -253,6 +270,7 @@ describe('Dogs API Specs', function() {
           .put('/api/dogs/' + dogIDs[0])
           .send({ breed: 'schnauser' })
           .set('Accept', 'application/json')
+          .auth('secret api key', 'x')
           .expect(400, done);
       });
 
@@ -261,6 +279,7 @@ describe('Dogs API Specs', function() {
           .put('/api/dogs/' + dogIDs[0])
           .send({ dob: '' })
           .set('Accept', 'application/json')
+          .auth('secret api key', 'x')
           .expect(400, done);
       });
     });
@@ -270,18 +289,21 @@ describe('Dogs API Specs', function() {
     it('should remove a dog', function(done) {
       agent
         .del('/api/dogs/' + dogIDs[0])
+        .auth('secret api key', 'x')
         .expect(204, done);
     });
 
     it('should return a 404 if the dog cannot be found', function(done) {
       agent
         .del('/api/dogs/' + ObjectId())
+        .auth('secret api key', 'x')
         .expect(404, done);
     });
 
     it('should return a 404 if the ID is invalid', function(done) {
       agent
         .del('/api/dogs/1')
+        .auth('secret api key', 'x')
         .expect(404, done);
     });
   });

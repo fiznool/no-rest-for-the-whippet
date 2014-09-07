@@ -4,8 +4,8 @@ var passport = require('passport'),
     DogsController = require('./dogs.controller');
 
 module.exports = function(app) {
-  /*app.route('/api/*')
-     .all(passport.authenticate('basic', { session : false }));*/
+  app.route('/api/*')
+     .all(passport.authenticate('basic', { session : false }));
 
   app.route('/api/dogs')
      .get(DogsController.index)
