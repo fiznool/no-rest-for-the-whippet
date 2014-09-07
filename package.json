@@ -1,0 +1,30 @@
+{
+  "name": "no-rest-for-the-whippet",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha test/"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/fiznool/no-rest-for-the-whippet"
+  },
+  "author": "Tom Spencer <fiznool@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fiznool/no-rest-for-the-whippet/issues"
+  },
+  "homepage": "https://github.com/fiznool/no-rest-for-the-whippet",
+  "dependencies": {
+    "body-parser": "^1.8.0",
+    "express": "^4.8.8",
+    "mongoose": "^3.8.15"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^1.21.4",
+    "supertest": "^0.13.0"
+  }
+}
