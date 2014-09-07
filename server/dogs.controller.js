@@ -52,7 +52,12 @@ DogsController.update = function(req, res, next) {
 };
 
 DogsController.destroy = function(req, res, next) {
-  next({ status: 500 });
+  return Dog.findByIdAndRemove(req.params.id, function(err, dog) {
+    if(err) { return next(err); }
+    if(!dog) { return next({ status: 404, body: 'Dog not found' }); }
+
+    return res.status(204).end();
+  });
 };
 
 module.exports = DogsController;
