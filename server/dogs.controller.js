@@ -13,7 +13,27 @@ var Dog = require('./dog.model');
 var DogsController = {};
 
 DogsController.index = function(req, res, next) {
-  return Dog.find(function(err, dogs) {
+  var query = Dog.find();
+
+  // Filtering
+  if(req.query.breed) {
+    query.where('breed').equals(req.query.breed);
+  }
+
+  // Sorting
+  if(req.query.sort) {
+    query.sort(req.query.sort);
+  }
+
+  // Pagination
+  if(req.query.offset) {
+    query.skip(req.query.offset);
+  }
+  if(req.query.limit) {
+    query.limit(req.query.limit);
+  }
+
+  return query.exec(function(err, dogs) {
     if(err) { return next(err); }
 
     return res.status(200).json(dogs);
