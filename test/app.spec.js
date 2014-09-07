@@ -63,9 +63,32 @@ describe('Dogs API Specs', function() {
   });
 
   describe('Retrieve One', function() {
-    it('should get a dog by ID');
-    it('should return a 404 if the dog cannot be found');
-    it('should return a 404 if the ID is invalid');
+    it('should get a dog by ID', function(done) {
+      agent
+        .get('/api/dogs/' + dogIDs[0])
+        .expect(200)
+        .end(function(err, res) {
+          expect(err).to.be(null);
+
+          expect(res.body.name).to.be('Heinz');
+          expect(res.body.breed).to.be('corgi');
+          expect(res.body.dob).to.eql('2012-04-20T00:00:00.000Z');
+
+          done();
+        });
+    });
+
+    it('should return a 404 if the dog cannot be found', function(done) {
+      agent
+        .get('/api/dogs/' + ObjectId())
+        .expect(404, done);
+    });
+
+    it('should return a 404 if the ID is invalid', function(done) {
+      agent
+        .get('/api/dogs/1')
+        .expect(404, done);
+    });
   });
 
   describe('Create', function() {
