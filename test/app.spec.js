@@ -119,9 +119,35 @@ describe('Dogs API Specs', function() {
   });
 
   describe('Update', function() {
-    it('should update a dog');
-    it('should return a 404 if the dog cannot be found');
-    it('should return a 404 if the ID is invalid');
+    it('should update a dog', function(done) {
+      agent
+        .put('/api/dogs/' + dogIDs[0])
+        .send({ name: 'Cooper' })
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(function(err, res) {
+          expect(err).to.be(null);
+
+          expect(res.body._id).to.be.ok();
+          expect(res.body.name).to.be('Cooper');
+          expect(res.body.breed).to.be('corgi');
+          expect(res.body.dob).to.be('2012-04-20T00:00:00.000Z');
+
+          done();
+        });
+    });
+
+    it('should return a 404 if the dog cannot be found', function(done) {
+      agent
+        .put('/api/dogs/' + ObjectId())
+        .expect(404, done);
+    });
+
+    it('should return a 404 if the ID is invalid', function(done) {
+      agent
+        .put('/api/dogs/1')
+        .expect(404, done);
+    });
 
     describe('Validation', function() {
       it('should require a name');
