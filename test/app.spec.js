@@ -57,9 +57,60 @@ describe('Dogs API Specs', function() {
         });
     });
 
-    it('should filter by breed');
-    it('should sort by dob, oldest first');
-    it('should paginate dogs');
+    it('should filter by breed', function(done) {
+      agent
+        .get('/api/dogs?breed=labrador')
+        .expect(200)
+        .end(function(err, res) {
+          expect(err).to.be(null);
+
+          expect(res.body.length).to.be(1);
+
+          expect(res.body[0].name).to.be('Fenton');
+          expect(res.body[0].breed).to.be('labrador');
+          expect(res.body[0].dob).to.eql('2010-08-06T00:00:00.000Z');
+
+          done();
+        });
+    });
+
+    it('should sort by dob, oldest first', function(done) {
+      agent
+        .get('/api/dogs?sort=dob')
+        .expect(200)
+        .end(function(err, res) {
+          expect(err).to.be(null);
+
+          expect(res.body.length).to.be(2);
+
+          expect(res.body[0].name).to.be('Fenton');
+          expect(res.body[0].breed).to.be('labrador');
+          expect(res.body[0].dob).to.eql('2010-08-06T00:00:00.000Z');
+
+          expect(res.body[1].name).to.be('Heinz');
+          expect(res.body[1].breed).to.be('corgi');
+          expect(res.body[1].dob).to.eql('2012-04-20T00:00:00.000Z');
+
+          done();
+        });
+    });
+
+    it('should paginate dogs', function(done) {
+      agent
+        .get('/api/dogs?offset=1&limit=1')
+        .expect(200)
+        .end(function(err, res) {
+          expect(err).to.be(null);
+
+          expect(res.body.length).to.be(1);
+
+          expect(res.body[0].name).to.be('Fenton');
+          expect(res.body[0].breed).to.be('labrador');
+          expect(res.body[0].dob).to.eql('2010-08-06T00:00:00.000Z');
+
+          done();
+        });
+    });
   });
 
   describe('Retrieve One', function() {
