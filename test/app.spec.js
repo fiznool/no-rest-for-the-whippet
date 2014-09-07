@@ -111,10 +111,37 @@ describe('Dogs API Specs', function() {
     });
 
     describe('Validation', function() {
-      it('should require a name');
-      it('should require a breed');
-      it('should fail if an invalid breed is specified');
-      it('should require a dob');
+      it('should require a name', function(done) {
+        agent
+          .post('/api/dogs')
+          .send({ breed: 'spaniel', dob: '2011-10-12T00:00:00.000Z'})
+          .set('Accept', 'application/json')
+          .expect(400, done);
+      });
+
+      it('should require a breed', function(done) {
+        agent
+          .post('/api/dogs')
+          .send({ name: 'Manny', dob: '2011-10-12T00:00:00.000Z'})
+          .set('Accept', 'application/json')
+          .expect(400, done);
+      });
+
+      it('should fail if an invalid breed is specified', function(done) {
+        agent
+          .post('/api/dogs')
+          .send({ name: 'Manny', breed: 'schnauser', dob: '2011-10-12T00:00:00.000Z'})
+          .set('Accept', 'application/json')
+          .expect(400, done);
+      });
+
+      it('should require a dob', function(done) {
+        agent
+          .post('/api/dogs')
+          .send({ name: 'Manny', breed: 'spaniel' })
+          .set('Accept', 'application/json')
+          .expect(400, done);
+      });
     });
   });
 
@@ -150,10 +177,37 @@ describe('Dogs API Specs', function() {
     });
 
     describe('Validation', function() {
-      it('should require a name');
-      it('should require a breed');
-      it('should fail if an invalid breed is specified');
-      it('should require a dob');
+      it('should require a name', function(done) {
+        agent
+          .put('/api/dogs/' + dogIDs[0])
+          .send({ name: '' })
+          .set('Accept', 'application/json')
+          .expect(400, done);
+      });
+
+      it('should require a breed', function(done) {
+        agent
+          .put('/api/dogs/' + dogIDs[0])
+          .send({ breed: '' })
+          .set('Accept', 'application/json')
+          .expect(400, done);
+      });
+
+      it('should fail if an invalid breed is specified', function(done) {
+        agent
+          .put('/api/dogs/' + dogIDs[0])
+          .send({ breed: 'schnauser' })
+          .set('Accept', 'application/json')
+          .expect(400, done);
+      });
+
+      it('should require a dob', function(done) {
+        agent
+          .put('/api/dogs/' + dogIDs[0])
+          .send({ dob: '' })
+          .set('Accept', 'application/json')
+          .expect(400, done);
+      });
     });
   });
 
