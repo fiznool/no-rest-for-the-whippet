@@ -212,8 +212,22 @@ describe('Dogs API Specs', function() {
   });
 
   describe('Destroy', function() {
-    it('should remove a dog');
-    it('should return a 404 if the dog cannot be found');
-    it('should return a 404 if the ID is invalid');
+    it('should remove a dog', function(done) {
+      agent
+        .del('/api/dogs/' + dogIDs[0])
+        .expect(204, done);
+    });
+
+    it('should return a 404 if the dog cannot be found', function(done) {
+      agent
+        .del('/api/dogs/' + ObjectId())
+        .expect(404, done);
+    });
+
+    it('should return a 404 if the ID is invalid', function(done) {
+      agent
+        .del('/api/dogs/1')
+        .expect(404, done);
+    });
   });
 });
