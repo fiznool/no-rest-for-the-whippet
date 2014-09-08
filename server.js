@@ -14,6 +14,9 @@ var app = express();
 // from the request body
 app.use(bodyParser.json());
 
+// Setup authentication
+require('./server/auth')(app);
+
 // Setup the app routes
 require('./server/routes')(app);
 

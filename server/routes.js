@@ -1,8 +1,11 @@
 'use strict';
 
-var DogsController = require('./dogs.controller');
+var passport = require('passport'),
+    DogsController = require('./dogs.controller');
 
 module.exports = function(app) {
+  /*app.route('/api/*')
+     .all(passport.authenticate('basic', { session : false }));*/
 
   app.route('/api/dogs')
      .get(DogsController.index)

@@ -32,7 +32,11 @@ describe('Dogs API Specs', function() {
   });
 
   describe('Authentication', function() {
-    it('should protect all API routes');
+    it('should protect all API routes', function(done) {
+      agent
+        .get('/api/dogs')
+        .expect(401, done);
+    });
   });
 
   describe('Retrieve All', function() {
